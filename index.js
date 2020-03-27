@@ -66,7 +66,15 @@ module.exports = {
 
     // Owner
     if (parsedFeed.rss.channel[0].hasOwnProperty('itunes:owner')) {
-      parsedFeed.rss.channel[0]['itunes:owner']
+      podcastJSON.meta.owner = {}
+
+      if (parsedFeed.rss.channel[0]['itunes:owner'][0].hasOwnProperty('itunes:name')) {
+        podcastJSON.meta.owner.name = parsedFeed.rss.channel[0]['itunes:owner'][0]['itunes:name'][0]
+      }
+
+      if (parsedFeed.rss.channel[0]['itunes:owner'][0].hasOwnProperty('itunes:email')) {
+        podcastJSON.meta.owner.email = parsedFeed.rss.channel[0]['itunes:owner'][0]['itunes:email'][0]
+      }
     }
 
     // Pages
