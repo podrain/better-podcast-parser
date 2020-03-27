@@ -77,6 +77,15 @@ module.exports = {
       }
     }
 
+    // Explicit?
+    if (parsedFeed.rss.channel[0].hasOwnProperty('itunes:explicit')) {
+      podcastJSON.meta.explicit = false
+
+      if (['yes', 'explicit', 'true'].indexOf(parsedFeed.rss.channel[0]['itunes:explicit'][0].toLowerCase()) >= 0) {
+        podcastJSON.meta.explicit = true
+      }
+    }
+
     // Pages
     if (parsedFeed.rss.channel[0].hasOwnProperty('atom:link')) {
       podcastJSON.meta.pages = {}
@@ -87,7 +96,6 @@ module.exports = {
     }
 
     // console.log(parsedFeed.rss.channel[0]['itunes:category'])
-    // console.log(podcastJSON)
 
     return podcastJSON
   }
