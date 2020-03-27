@@ -25,6 +25,11 @@ module.exports = {
       podcastJSON.meta.imageURL = podcastData['itunes:image'][0]['$'].href
     }
 
+    // Last updated
+    if (podcastData.hasOwnProperty('lastBuildDate')) {
+      podcastJSON.meta.lastUpdated = new Date(podcastData.lastBuildDate[0]).toISOString()
+    }
+
     // Link
     if (podcastData.hasOwnProperty('link')) {
       podcastJSON.meta.link = podcastData.link[0]
@@ -97,6 +102,84 @@ module.exports = {
     }
 
     // console.log(podcastData['itunes:category'])
+
+    // Episodes
+    if (podcastData.hasOwnProperty('item')) {
+      podcastJSON.episodes = []
+
+      for (let episodeData of podcastData['item']) {
+        let episodeJSON = {}
+
+        // Title
+        if (episodeData.hasOwnProperty('title')) {
+          episodeJSON.title = episodeData.title[0]
+        }
+
+        // Description
+        if (episodeData.hasOwnProperty('description')) {
+          episodeJSON.description = episodeData.description[0]
+        }
+
+        // Subtitle
+        if (episodeData.hasOwnProperty('itunes:subtitle')) {
+          episodeJSON.subtitle = episodeData['itunes:subtitle'][0]
+        }
+
+        // Image
+        if (episodeData.hasOwnProperty('itunes:image')) {
+          episodeJSON.imageURL = episodeData['itunes:image'][0]['$'].href
+        }
+
+        // Publish date
+        if (episodeData.hasOwnProperty('pubDate')) {
+          episodeJSON.pubDate = new Date(episodeData['pubDate'][0]).toISOString()
+        }
+
+        // Link
+        if (episodeData.hasOwnProperty('link')) {
+          episodeJSON.link = episodeData.link[0]
+        }
+
+        // Enclosure
+        if (episodeData.hasOwnProperty('enclosure')) {
+          episodeJSON.enclosure = episodeData.enclosure[0]['$']
+        }
+
+        // Duration
+        if (episodeData.hasOwnProperty('itunes:duration')) {
+          let timeToSeconds = function(string) {
+            // gives duration in seconds
+            let times = string.split(':'),
+            sum = 0, mul = 1
+        
+            while (times.length > 0) {
+              sum += mul * parseInt(times.pop())
+              mul *= 60
+            }
+        
+            return sum
+          }
+
+          episodeJSON.duration = timeToSeconds(episodeData['itunes:duration'][0])
+        }
+
+        // Summary
+        if (episodeData.hasOwnProperty('itunes:summary')) {
+          episodeJSON.summary = episodeData['itunes:summary'][0]
+        }
+
+        // Explicit
+        if (episodeData.hasOwnProperty('itunes:explicit')) {
+          episodeJSON.explicit = false
+
+          if (['yes', 'explicit', 'true'].indexOf(episodeData['itunes:explicit'][0].toLowerCase()) >= 0) {
+            episodeJSON.explicit = true
+          }
+        }
+        
+        podcastJSON.episodes.push(episodeJSON)
+      }
+    }
 
     return podcastJSON
   }
