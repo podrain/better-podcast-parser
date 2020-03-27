@@ -79,12 +79,10 @@ module.exports = {
 
     // Pages
     if (parsedFeed.rss.channel[0].hasOwnProperty('atom:link')) {
-      podcastJSON.meta.pages = []
+      podcastJSON.meta.pages = {}
 
       for (let page of parsedFeed.rss.channel[0]['atom:link']) {
-        let pageJSON = {}
-        pageJSON[page['$'].rel] = page['$'].href
-        podcastJSON.meta.pages.push(pageJSON)
+        podcastJSON.meta.pages[page['$'].rel] = page['$'].href
       }
     }
 
