@@ -1,5 +1,6 @@
 {
   "name": "podrain-feed-parser",
+  "main": "index.js",
   "scripts": {
     "test": "npx ospec --require test.js"
   },

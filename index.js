@@ -1,9 +1,13 @@
 let xml2js = require('xml2js')
 let fs = require('fs')
 let _ = require('lodash')
+let axios = require('axios')
 
 module.exports = {
-  async parseFeed(rawFeed) {
+  async parseFeed(rawFeed, options = {
+    proxyURL: '',
+    getAllPages: false,
+  }) {
     let parsedFeed = await xml2js.parseStringPromise(rawFeed)
     let podcastData = parsedFeed.rss.channel[0]
     let podcastJSON = {}
@@ -180,6 +184,43 @@ module.exports = {
         podcastJSON.episodes.push(episodeJSON)
       }
     }
+
+    if (options.getAllPages && podcastJSON.meta.hasOwnProperty('pages') && podcastJSON.meta.pages.hasOwnProperty('next')) {
+      let allOtherEpisodes = await this.getNextPage(podcastJSON, { proxyURL: options.proxyURL })
+      podcastJSON.episodes = _.concat(podcastJSON.episodes, allOtherEpisodes)
+    }
+
+    return podcastJSON
+  },
+
+  async getNextPage(podcastJSON, options = {
+    proxyURL: '',
+  }, episodesAppended = []) {
+
+    if (podcastJSON.meta.hasOwnProperty('pages') && podcastJSON.meta.pages.hasOwnProperty('next')) {
+      let nextPageJSON = await this.parseURL(podcastJSON.meta.pages.next, {
+        proxyURL: options.proxyURL
+      })
+
+      let newEpisodesAppended = _.concat(episodesAppended, nextPageJSON.episodes)
+
+      return await this.getNextPage(nextPageJSON, { proxyURL: options.proxyURL }, newEpisodesAppended)
+    } else {
+      return episodesAppended
+    }
+  },
+
+  async parseURL(url, options = {
+    proxyURL: '',
+    getAllPages: false
+  }) {
+    let podcastResponse = await axios.get(options.proxyURL + url, {
+      headers: {
+        'accept': 'application/rss+xml, application/rdf+xml;q=0.8, application/atom+xml;q=0.6, application/xml;q=0.4, text/xml;q=0.4'
+      }
+    })
+
+    let podcastJSON = await this.parseFeed(podcastResponse.data, options)
 
     return podcastJSON
   }
