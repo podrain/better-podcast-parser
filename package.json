@@ -1,0 +1,14 @@
+{
+  "name": "podrain-feed-parser",
+  "scripts": {
+    "test": "npx ospec --require test.js"
+  },
+  "devDependencies": {
+    "axios": "^0.19.2",
+    "ospec": "^4.0.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "xml2js": "^0.4.23"
+  }
+}
