@@ -1,11 +1,7 @@
-'use strict';
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var fastXmlParser = _interopDefault(require('fast-xml-parser'));
-var he = _interopDefault(require('he'));
-var lodash = _interopDefault(require('lodash'));
-var axios = _interopDefault(require('axios'));
+import fastXmlParser from 'fast-xml-parser';
+import he from 'he';
+import lodash from 'lodash';
+import axios from 'axios';
 
 var podrainFeedParser = {
   async parseFeed(rawFeed, options = {
@@ -244,4 +240,4 @@ var podrainFeedParser = {
   }
 };
 
-module.exports = podrainFeedParser;
+export default podrainFeedParser;
