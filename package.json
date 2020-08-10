@@ -3,7 +3,10 @@
   "version": "0.1.2",
   "license": "MIT",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "rollup": "^2.23.1"
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "fast-xml-parser": "^3.17.4",
