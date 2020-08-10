@@ -1,6 +1,7 @@
 {
   "name": "better-podcast-parser",
   "version": "0.1.2",
+  "license": "MIT",
   "main": "index.js",
   "devDependencies": {},
   "dependencies": {
