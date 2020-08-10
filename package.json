@@ -1,13 +1,8 @@
 {
-  "name": "podrain-feed-parser",
-  "version": "0.1.1",
+  "name": "better-podcast-parser",
+  "version": "0.1.2",
   "main": "index.js",
-  "scripts": {
-    "test": "npx ospec --require test.js"
-  },
-  "devDependencies": {
-    "ospec": "^4.0.1"
-  },
+  "devDependencies": {},
   "dependencies": {
     "axios": "^0.19.2",
     "fast-xml-parser": "^3.17.4",
