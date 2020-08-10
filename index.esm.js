@@ -228,13 +228,24 @@ var podrainFeedParser = {
     proxyURL: '',
     getAllPages: false
   }) {
-    let podcastResponse = await axios.get(options.proxyURL + url, {
-      headers: {
-        'accept': 'application/rss+xml, application/rdf+xml;q=0.8, application/atom+xml;q=0.6, application/xml;q=0.4, text/xml;q=0.4'
-      }
-    });
+    let podcastXMLString = '';
+    let headers = {
+      'accept': 'application/rss+xml, application/rdf+xml;q=0.8, application/atom+xml;q=0.6, application/xml;q=0.4, text/xml;q=0.4'
+    };
 
-    let podcastJSON = await this.parseFeed(podcastResponse.data, options);
+    if (typeof fetch === 'function') {
+      let podcastResponse = await fetch(options.proxyURL + url, {
+        headers: headers
+      });
+      podcastXMLString = await podcastResponse.text();
+    } else {
+      let podcastResponse = await axios.get(options.proxyURL + url, {
+        headers: headers
+      });
+      podcastXMLString = podcastResponse.data;
+    }
+
+    let podcastJSON = await this.parseFeed(podcastXMLString, options);
 
     return podcastJSON
   }
