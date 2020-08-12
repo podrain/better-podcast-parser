@@ -69,13 +69,21 @@ module.exports = {
 
       // Upper level details
       let upperLevelCategory = podcastData['itunes:category']
-      categoriesRaw.push(upperLevelCategory['@_text'])
+      if (upperLevelCategory.hasOwnProperty('@_text')) {
+        categoriesRaw.push(upperLevelCategory['@_text'])
+      }
 
       // Sub level details
       if (upperLevelCategory.hasOwnProperty('itunes:category')) {
-        for (let lowerLevelCategory of upperLevelCategory['itunes:category']) {
-          categoriesRaw.push(lowerLevelCategory['@_text'])
-        } 
+        // Multiple subcategories?
+        if (Array.isArray(upperLevelCategory['itunes:category'])) {
+          for (let lowerLevelCategory of upperLevelCategory['itunes:category']) {
+            categoriesRaw.push(lowerLevelCategory['@_text'])
+          }
+        } else {
+          // Just one sub...
+          categoriesRaw.push(upperLevelCategory['itunes:category']['@_text'])
+        }
       }
       
 
@@ -178,7 +186,9 @@ module.exports = {
             return sum
           }
 
-          episodeJSON.duration = timeToSeconds(episodeData['itunes:duration'])
+          episodeJSON.duration = typeof episodeData['itunes:duration'] == 'string' 
+            ? timeToSeconds(episodeData['itunes:duration']) 
+            : episodeData['itunes:duration']
         }
 
         // Summary
