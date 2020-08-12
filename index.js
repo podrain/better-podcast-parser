@@ -116,8 +116,12 @@ module.exports = {
     if (podcastData.hasOwnProperty('atom:link')) {
       podcastJSON.meta.pages = {}
 
-      for (let page of podcastData['atom:link']) {
-        podcastJSON.meta.pages[page['@_rel']] = page['@_href']
+      if (Array.isArray(podcastData['atom:link'])) {
+        for (let page of podcastData['atom:link']) {
+          podcastJSON.meta.pages[page['@_rel']] = page['@_href']
+        }
+      } else {
+        podcastJSON.meta.pages[podcastData['atom:link']['@_rel']] = podcastData['atom:link']['@_href']
       }
     }
 
