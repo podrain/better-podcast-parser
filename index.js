@@ -131,6 +131,12 @@ module.exports = {
     if (podcastData.hasOwnProperty('item')) {
       podcastJSON.episodes = []
 
+      if (!Array.isArray(podcastData['item'])) {
+        let singleItem = podcastData['item']
+        podcastData['item'] = new Array
+        podcastData['item'][0] = singleItem
+      }
+
       for (let episodeData of podcastData['item']) {
         let episodeJSON = {}
 
