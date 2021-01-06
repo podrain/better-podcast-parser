@@ -1,6 +1,6 @@
 {
   "name": "better-podcast-parser",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "license": "MIT",
   "main": "index.js",
   "module": "index.esm.js",
