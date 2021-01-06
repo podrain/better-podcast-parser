@@ -9,7 +9,7 @@
     "rollup": "^2.23.1"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "fast-xml-parser": "^3.17.4",
     "he": "^1.2.0",
     "lodash": "^4.17.15"
