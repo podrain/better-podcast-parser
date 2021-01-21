@@ -2,6 +2,9 @@
 
 A fully-featured podcast parser. Built for [Podrain](https://github.com/podrain/podrain) but can be used in Node or the browser.
 
+## Repo
+https://github.com/podrain/better-podcast-parser
+
 ## Features
 There are a couple of features that help this library stand out:
 
