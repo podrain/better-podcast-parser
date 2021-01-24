@@ -140,6 +140,15 @@ module.exports = {
       for (let episodeData of podcastData['item']) {
         let episodeJSON = {}
 
+        // GUID
+        if (episodeData.hasOwnProperty('guid')) {
+          if (episodeData.guid.hasOwnProperty('@_isPermaLink')) {
+            episodeJSON.guid = episodeData.guid.undefined
+          } else {
+            episodeJSON.guid = episodeData.guid
+          }
+        }
+
         // Title
         if (episodeData.hasOwnProperty('title')) {
           episodeJSON.title = episodeData.title
