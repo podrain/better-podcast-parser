@@ -107,8 +107,12 @@ module.exports = {
     if (podcastData.hasOwnProperty('itunes:explicit')) {
       podcastJSON.meta.explicit = false
 
-      if (['yes', 'explicit', 'true'].indexOf(podcastData['itunes:explicit'].toLowerCase()) >= 0) {
-        podcastJSON.meta.explicit = true
+      if (typeof podcastData['itunes:explicit'] == 'boolean') {
+        podcastJSON.meta.explicit = podcastData['itunes:explicit']
+      } else {
+        if (['yes', 'explicit', 'true'].indexOf(podcastData['itunes:explicit'].toLowerCase()) >= 0) {
+          podcastJSON.meta.explicit = true
+        }
       }
     }
 
@@ -219,8 +223,12 @@ module.exports = {
         if (episodeData.hasOwnProperty('itunes:explicit')) {
           episodeJSON.explicit = false
 
-          if (['yes', 'explicit', 'true'].indexOf(episodeData['itunes:explicit'].toLowerCase()) >= 0) {
-            episodeJSON.explicit = true
+          if (typeof episodeData['itunes:explicit'] == 'boolean') {
+            episodeJSON.explicit = episodeData['itunes:explicit']
+          } else {
+            if (['yes', 'explicit', 'true'].indexOf(episodeData['itunes:explicit'].toLowerCase()) >= 0) {
+              episodeJSON.explicit = true
+            }
           }
         }
         
