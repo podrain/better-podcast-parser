@@ -6,6 +6,7 @@
   "module": "index.esm.js",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
+    "dotenv": "^8.2.0",
     "rollup": "^2.23.1"
   },
   "dependencies": {
