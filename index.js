@@ -163,6 +163,11 @@ module.exports = {
           episodeJSON.description = episodeData.description
         }
 
+        // Encoded content
+        if (episodeData.hasOwnProperty('content:encoded')) {
+          episodeJSON.contentEncoded = episodeData['content:encoded']
+        }
+
         // Subtitle
         if (episodeData.hasOwnProperty('itunes:subtitle')) {
           episodeJSON.subtitle = episodeData['itunes:subtitle']
