@@ -1,9 +1,9 @@
-let parser = require('fast-xml-parser')
-let he = require('he')
-let _ = require('lodash')
-let axios = require('axios')
+import parser from 'fast-xml-parser'
+import he from 'he'
+import _ from 'lodash'
+import axios from 'axios'
 
-module.exports = {
+export default {
   async parseFeed(rawFeed, options = {
     proxyURL: '',
     getAllPages: false,

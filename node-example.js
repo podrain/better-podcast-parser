@@ -1,6 +1,6 @@
-let feedParser = require('./index')
-let fs = require('fs')
-require('dotenv').config()
+import feedParser from './index.js'
+import fs from 'node:fs'
+import 'dotenv/config'
 
 feedParser.parseURL(process.env.TEST_FEED_URL, {
   getAllPages: true
